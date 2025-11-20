@@ -12,8 +12,16 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="relative w-full border-t border-white/10 bg-black px-4 py-16 md:px-8 lg:py-24">
-            <div className="container mx-auto max-w-6xl">
+        <footer className="relative w-full overflow-hidden border-t border-white/10 bg-black px-4 py-16 md:px-8 lg:py-24">
+            {/* Bottom Glow Effect */}
+            <div
+                className="absolute bottom-0 left-1/2 h-[400px] w-[800px] -translate-x-1/2 translate-y-1/2 opacity-30 blur-[120px]"
+                style={{
+                    background: "radial-gradient(circle, rgba(255,215,0,0.4) 0%, rgba(255,215,0,0.2) 30%, transparent 70%)"
+                }}
+            />
+
+            <div className="container relative z-10 mx-auto max-w-6xl">
                 <div className="flex flex-col items-center justify-between gap-12 md:flex-row md:items-start">
                     {/* Left: Brand */}
                     <motion.div
