@@ -112,7 +112,7 @@ export default function SmokeHero() {
     }, []);
 
     return (
-        <div className="relative h-screen w-full overflow-hidden bg-black font-sans selection:bg-white/20">
+        <div className="relative h-screen w-full overflow-visible bg-black font-sans selection:bg-white/20">
 
             {/* 1. CANVAS LAYER (The Mist) */}
             <canvas
@@ -169,6 +169,9 @@ export default function SmokeHero() {
                     </motion.button>
                 </motion.div>
             </div>
+
+            {/* Bottom Gradient for Smooth Transition */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none z-20" />
 
         </div>
     );
