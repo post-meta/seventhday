@@ -12,7 +12,7 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="relative w-full overflow-hidden border-t border-white/10 bg-black px-4 py-16 md:px-8 lg:py-24">
+        <footer className="relative w-full overflow-hidden bg-black px-4 py-16 md:px-8 lg:py-24">
             {/* Bottom Glow Effect */}
             <div
                 className="absolute bottom-0 left-1/2 h-[400px] w-[800px] -translate-x-1/2 translate-y-1/2 opacity-30 blur-[120px]"
