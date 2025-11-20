@@ -19,23 +19,20 @@ export default function ProcessSection() {
     const [activeStep, setActiveStep] = useState(0);
 
     return (
-        <section className="relative flex w-full flex-col bg-black md:flex-row">
-            {/* Left Column: Simple Day List */}
-            <div className="flex h-screen w-full flex-col justify-center bg-black px-8 md:sticky md:top-0 md:w-[40%] md:pl-16">
-                <div className="flex flex-col gap-6">
+        <section className="relative flex w-full bg-black px-4 py-16 md:flex-row md:px-8 lg:py-24">
+            {/* Left Column: Day Numbers (Desktop Only) */}
+            <div className="sticky top-24 hidden h-screen w-[20%] md:block">
+                <div className="flex h-full flex-col justify-center space-y-8">
                     {steps.map((step, index) => (
                         <motion.div
-                            key={index}
+                            key={step.id}
+                            initial={{ opacity: 0.3 }}
                             animate={{
-                                opacity: activeStep === index ? 1 : 0.4,
+                                opacity: activeStep === index ? 1 : 0.3,
+                                scale: activeStep === index ? 1.1 : 1,
                             }}
-                            transition={{ duration: 0.5 }}
-                            className="cursor-pointer font-sans text-base text-white md:text-lg"
-                            onClick={() => {
-                                document
-                                    .getElementById(`day-${index + 1}`)
-                                    ?.scrollIntoView({ behavior: "smooth" });
-                            }}
+                            transition={{ duration: 0.3 }}
+                            className="font-display text-2xl font-bold leading-tight tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40"
                         >
                             {step.day}
                         </motion.div>
@@ -48,8 +45,7 @@ export default function ProcessSection() {
                 {steps.map((step, index) => (
                     <motion.div
                         key={step.id}
-                        id={`day-${index + 1}`}
-                        className="flex min-h-screen items-center justify-start"
+                        className="flex min-h-screen flex-col items-start justify-center"
                         initial={{ opacity: 0 }}
                         whileInView={{
                             opacity: 1,
@@ -70,6 +66,13 @@ export default function ProcessSection() {
                         }}
                         onViewportEnter={() => setActiveStep(index)}
                     >
+                        {/* Day number - Mobile Only */}
+                        {step.day && (
+                            <p className="mb-4 font-display text-xl font-bold text-white/40 md:hidden">
+                                {step.day}
+                            </p>
+                        )}
+
                         <p className="font-mono text-xl leading-relaxed text-white md:text-2xl lg:text-3xl">
                             {step.text}
                         </p>
