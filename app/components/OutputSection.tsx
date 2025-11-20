@@ -19,9 +19,19 @@ export default function OutputSection() {
           </motion.h2>
         </div>
 
-      </motion.div>
-    </div>
-      </div >
-    </section >
+        {/* Creation Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <p className="font-mono text-base text-white/60 md:text-lg">
+            We are in the process of creation.
+          </p>
+        </motion.div>
+      </div>
+    </section>
   );
 }
