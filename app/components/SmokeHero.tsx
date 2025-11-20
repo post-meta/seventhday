@@ -145,15 +145,15 @@ export default function SmokeHero() {
                     transition={{ duration: 1, delay: 1.2 }}
                     className="mt-12 flex flex-col items-center space-y-6 text-center"
                 >
-                    <p className="font-mono text-sm tracking-wide text-white/80 md:text-base">
+                    <p className="font-mono text-base tracking-wide text-white/80 md:text-lg">
                         We CREATE.
                     </p>
 
                     <div className="space-y-2">
-                        <p className="font-mono text-sm tracking-wide text-white/60 md:text-base">
+                        <p className="font-mono text-base tracking-wide text-white/60 md:text-lg">
                             Day one. We begin.
                         </p>
-                        <p className="font-mono text-sm tracking-wide text-white/60 md:text-base">
+                        <p className="font-mono text-base tracking-wide text-white/60 md:text-lg">
                             Day seven. It is finished.
                         </p>
                     </div>
@@ -163,7 +163,7 @@ export default function SmokeHero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.8 }}
-                        className="mt-8 rounded-full border border-white/30 bg-transparent px-8 py-3 font-mono text-xs uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10"
+                        className="mt-8 rounded-full border border-white/30 bg-transparent px-10 py-4 font-mono text-sm uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10 md:px-8 md:py-3 md:text-xs"
                     >
                         [ Begin Day One ]
                     </motion.button>
