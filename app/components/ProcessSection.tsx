@@ -72,15 +72,17 @@ function StepBlock({
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-20%" }}
             >
-                <span className="font-serif text-2xl italic text-holy-gold md:text-3xl">
+                <span className="font-sans text-sm text-white/70 md:text-base">
                     {step.day}
                 </span>
-                <h3 className="mt-4 font-display text-4xl font-bold uppercase text-white md:text-6xl">
+                <h3 className="mt-2 font-sans text-lg font-normal text-white md:text-xl">
                     {step.title}
                 </h3>
-                <p className="mt-8 max-w-xl font-sans text-xl text-gray-300 md:text-2xl">
-                    {step.description}
-                </p>
+                {step.description && (
+                    <p className="mt-1 font-sans text-lg font-normal text-white md:text-xl">
+                        {step.description}
+                    </p>
+                )}
             </motion.div>
         </div>
     );
@@ -91,32 +93,24 @@ export default function ProcessSection() {
 
     return (
         <section className="relative flex w-full flex-col bg-tech-blue md:flex-row">
-            {/* Left Column: Sticky List */}
+            {/* Left Column: Simple Day List */}
             <div className="flex h-screen w-full flex-col justify-center bg-tech-blue px-8 md:sticky md:top-0 md:w-[40%] md:pl-16">
-                <h2 className="mb-12 font-display text-3xl font-bold uppercase text-white/50 md:text-4xl">
-                    The 7 Pillars
-                </h2>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}
                             animate={{
-                                opacity: activeStep === index ? 1 : 0.3,
-                                x: activeStep === index ? 20 : 0,
-                                scale: activeStep === index ? 1.1 : 1,
+                                opacity: activeStep === index ? 1 : 0.4,
                             }}
                             transition={{ duration: 0.5 }}
-                            className={clsx(
-                                "cursor-pointer text-2xl font-bold uppercase transition-colors duration-500 md:text-4xl",
-                                activeStep === index ? "text-holy-gold" : "text-white"
-                            )}
+                            className="cursor-pointer font-sans text-base text-white md:text-lg"
                             onClick={() => {
                                 document
                                     .getElementById(`day-${index + 1}`)
                                     ?.scrollIntoView({ behavior: "smooth" });
                             }}
                         >
-                            {step.title}
+                            {step.day}
                         </motion.div>
                     ))}
                 </div>

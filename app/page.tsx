@@ -20,38 +20,40 @@ export default function Home() {
 
   return (
     <>
-      <main ref={containerRef} className="relative h-screen w-full overflow-hidden bg-tech-blue">
-        {/* Parallax Background */}
-        <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
-          <Image
-            src="/img/hero.webp"
-            alt="Seventh Day Hero Background"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-tech-blue/70" />
-        </motion.div>
-
-        {/* Content with Scroll Fade */}
+      <main ref={containerRef} className="relative min-h-screen w-full overflow-hidden" style={{
+        background: 'radial-gradient(circle at center, #1A1F38 0%, #0A0E27 70%)'
+      }}>
+        {/* Content */}
         <motion.div
           style={{ opacity }}
-          className="relative z-20 flex h-full flex-col items-center justify-center text-center px-4"
+          className="relative z-20 flex min-h-screen flex-col items-center justify-center text-center px-4 py-24"
         >
-          <h1 className="font-display text-6xl font-bold uppercase tracking-wider text-white md:text-8xl lg:text-9xl">
+          <h1 className="font-sans text-5xl font-normal text-white md:text-7xl lg:text-8xl">
             SEVENTH DAY
           </h1>
-          <p className="mt-6 font-serif text-2xl italic text-holy-gold md:text-4xl">
-            We CREATE.
+          <p className="mt-6 font-sans text-xl text-white md:text-2xl">
+            We CREATE brands in seven days.
           </p>
-          <p className="mx-auto mt-8 max-w-2xl font-sans text-lg leading-relaxed text-gray-400 md:text-xl">
-            In the beginning there was chaos. Day one. We began. Day seven. The
-            brand is finished. Six days of work between them. No extra meetings.
-            No extra words.
-          </p>
-          <button className="mt-10 rounded-full border border-holy-gold bg-transparent px-8 py-3 font-sans text-sm font-bold uppercase tracking-widest text-holy-gold transition-colors hover:bg-holy-gold hover:text-tech-blue">
-            [ Begin Day One ]
+
+          <div className="mt-16 max-w-2xl space-y-8">
+            <p className="font-sans text-base leading-relaxed text-white md:text-lg">
+              In the beginning there was chaos.<br />
+              Day one. We began.<br />
+              Day seven. The brand is finished.
+            </p>
+
+            <p className="font-sans text-base leading-relaxed text-white md:text-lg">
+              Six days of work between them.<br />
+              No extra meetings. No extra words.
+            </p>
+
+            <p className="font-sans text-base leading-relaxed text-white md:text-lg">
+              Ready to start Monday?
+            </p>
+          </div>
+
+          <button className="mt-12 rounded-full border border-white bg-transparent px-8 py-3 font-sans text-sm uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-tech-blue">
+            Begin Day One
           </button>
         </motion.div>
 

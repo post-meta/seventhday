@@ -35,10 +35,10 @@ export default function Manifesto() {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-10%" }}
             >
-                {/* Impact Header */}
+                {/* Header */}
                 <motion.h2
                     variants={itemVariants}
-                    className="font-display text-4xl font-bold uppercase leading-tight text-white md:text-6xl lg:text-7xl"
+                    className="font-sans text-3xl font-normal text-white md:text-5xl lg:text-6xl"
                 >
                     We did not invent anything new.
                 </motion.h2>
@@ -46,20 +46,33 @@ export default function Manifesto() {
                 {/* Body Text */}
                 <motion.p
                     variants={itemVariants}
-                    className="mt-8 max-w-2xl font-sans text-lg leading-relaxed text-gray-300 md:text-xl"
+                    className="mt-8 max-w-2xl font-sans text-base leading-relaxed text-white md:text-lg"
                 >
-                    We simply removed what was not needed. The usual way: months of
-                    talks and revisions. Our way: seven days. Day one — audit. Day
-                    seven — launch. That is all.
+                    We simply removed what was not needed.
                 </motion.p>
 
-                {/* The Philosophy */}
-                <motion.blockquote
+                <motion.p
                     variants={itemVariants}
-                    className="mt-12 border-l-2 border-holy-gold pl-6 font-serif text-2xl italic text-holy-gold md:text-3xl"
+                    className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-white md:text-lg"
                 >
-                    "We CREATE in seven days. And you will see that it is good."
-                </motion.blockquote>
+                    The usual way: months of talks and revisions.<br />
+                    Our way: seven days.
+                </motion.p>
+
+                <motion.p
+                    variants={itemVariants}
+                    className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-white md:text-lg"
+                >
+                    Day one — audit.<br />
+                    Day seven — launch.
+                </motion.p>
+
+                <motion.p
+                    variants={itemVariants}
+                    className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-white md:text-lg"
+                >
+                    That is all.
+                </motion.p>
             </motion.div>
         </section>
     );
