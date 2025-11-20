@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function OutputSection() {
   return (
-    <section className="relative w-full bg-black px-4 py-24 md:px-8 lg:py-32">
+    <section className="relative w-full bg-black px-4 py-32 md:px-8 lg:py-48">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-16 text-center md:mb-24">

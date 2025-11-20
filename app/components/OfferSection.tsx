@@ -42,7 +42,7 @@ export default function OfferSection() {
     ];
 
     return (
-        <section className="relative flex w-full flex-col items-center justify-center bg-black px-4 py-24 md:px-8 lg:py-32">
+        <section className="relative flex w-full flex-col items-center justify-center bg-black px-4 py-32 md:px-8 lg:py-48">
             <div className="container mx-auto max-w-6xl">
                 {/* Packages Grid */}
                 <div className="grid gap-8 md:grid-cols-3">
@@ -54,8 +54,8 @@ export default function OfferSection() {
                             transition={{ duration: 0.8, delay: index * 0.2 }}
                             viewport={{ once: true }}
                             className={`group relative flex flex-col bg-black p-8 transition-all hover:border-white/30 ${pkg.name === "Genesis"
-                                    ? "border border-white/30"
-                                    : "border border-white/10"
+                                ? "border border-white/30"
+                                : "border border-white/10"
                                 }`}
                         >
                             {/* Package Name */}
