@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function OfferSection() {
+    const [activePkg, setActivePkg] = useState(0);
+
     const packages = [
         {
             name: "Genesis",
@@ -52,8 +56,9 @@ export default function OfferSection() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.2 }}
-                            viewport={{ once: true }}
-                            className={`group relative flex flex-col bg-black p-8 transition-all hover:border-white/30 ${pkg.name === "Genesis"
+                            viewport={{ once: false, amount: 0.6 }}
+                            onViewportEnter={() => setActivePkg(index)}
+                            className={`group relative flex flex-col bg-black p-8 transition-all hover:border-white/30 ${activePkg === index
                                 ? "border border-white/30"
                                 : "border border-white/10"
                                 }`}
@@ -80,7 +85,7 @@ export default function OfferSection() {
 
                             {/* CTA - appears on hover or if active */}
                             <button
-                                className={`mt-8 w-full rounded-full border border-white/30 bg-transparent py-3 font-mono text-xs uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10 ${pkg.name === "Genesis" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                className={`mt-8 w-full rounded-full border border-white/30 bg-transparent py-3 font-mono text-xs uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10 ${activePkg === index ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                                     }`}
                             >
                                 Begin Day One

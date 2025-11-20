@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Footer() {
     const contacts = [
-        { name: "Email", href: "mailto:hello@seventhday.com", label: "hello@seventhday.com" },
+        { name: "Email", href: "mailto:hello@seventh.day", label: "hello@seventh.day" },
         { name: "LinkedIn", href: "https://linkedin.com/company/seventhday", label: "LinkedIn" },
         { name: "X", href: "https://x.com/seventhday", label: "X.com" },
         { name: "Telegram", href: "https://t.me/seventhday", label: "Telegram" },
