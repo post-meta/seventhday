@@ -13,11 +13,29 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    // Auto-play audio on mount
-    if (audioRef.current) {
-      audioRef.current.volume = 0.3; // Set volume to 30%
-      audioRef.current.play().catch(error => {
-        console.log("Audio autoplay prevented:", error);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    // Set initial volume
+    audio.volume = 0.3;
+
+    // Try to play immediately
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Auto-play was prevented.
+        // Add a one-time click listener to start audio
+        const startAudio = () => {
+          audio.play();
+          document.removeEventListener("click", startAudio);
+          document.removeEventListener("touchstart", startAudio);
+          document.removeEventListener("keydown", startAudio);
+        };
+
+        document.addEventListener("click", startAudio);
+        document.addEventListener("touchstart", startAudio);
+        document.addEventListener("keydown", startAudio);
       });
     }
   }, []);
