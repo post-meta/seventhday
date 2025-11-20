@@ -5,13 +5,6 @@ import { motion, useInView } from "framer-motion";
 import clsx from "clsx";
 
 const steps = [
-    {
-        day: "Day 1",
-        title: "There was chaos.",
-        description: "We came.",
-    },
-    {
-        day: "Day 2",
     { id: 1, day: "Day 1", text: "We begin." },
     { id: 2, day: "Day 2", text: "We listen." },
     { id: 3, day: "Day 3", text: "We build the foundation." },
@@ -21,52 +14,6 @@ const steps = [
     { id: 7, day: "Day 7", text: "It is finished." },
     { id: 8, day: "", text: "Rest." },
 ];
-
-function StepBlock({
-    step,
-    index,
-    setActiveStep,
-}: {
-    step: (typeof steps)[0];
-    index: number;
-    setActiveStep: (index: number) => void;
-}) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { margin: "-50% 0px -50% 0px" });
-
-    useEffect(() => {
-        if (isInView) {
-            setActiveStep(index);
-        }
-    }, [isInView, index, setActiveStep]);
-
-    return (
-        <div
-            ref={ref}
-            id={`day-${index + 1}`}
-            className="flex min-h-screen flex-col justify-center px-8 py-24 md:px-16"
-        >
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true, margin: "-20%" }}
-            >
-                <span className="font-sans text-sm text-white/70 md:text-base">
-                    {step.day}
-                </span>
-                <h3 className="mt-2 font-sans text-lg font-normal text-white md:text-xl">
-                    {step.title}
-                </h3>
-                {step.description && (
-                    <p className="mt-1 font-sans text-lg font-normal text-white md:text-xl">
-                        {step.description}
-                    </p>
-                )}
-            </motion.div>
-        </div>
-    );
-}
 
 export default function ProcessSection() {
     const [activeStep, setActiveStep] = useState(0);
