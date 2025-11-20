@@ -1,65 +1,62 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Manifesto from "./components/Manifesto";
 import ProcessSection from "./components/ProcessSection";
 import OutputSection from "./components/OutputSection";
 import OfferSection from "./components/OfferSection";
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   return (
     <>
-      <main ref={containerRef} className="relative min-h-screen w-full overflow-hidden" style={{
-        background: 'radial-gradient(circle at center, #1A1F38 0%, #0A0E27 70%)'
-      }}>
-        {/* Content */}
+      {/* HERO SECTION: X.AI-STYLE LIGHT REVEAL */}
+      <div className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-[#050505]">
+
+        {/* 1. PRIMARY LIGHT: Holy Gold Nebula (The Reveal) */}
+        {/* Moves from off-screen Right to Center-Left */}
         <motion.div
-          style={{ opacity }}
-          className="relative z-20 flex min-h-screen flex-col items-center justify-center text-center px-4 py-24"
-        >
-          <h1 className="font-sans text-5xl font-normal text-white md:text-7xl lg:text-8xl">
-            SEVENTH DAY
+          initial={{ x: "100%", opacity: 0, scale: 0.8 }}
+          animate={{ x: "-20%", opacity: 0.8, scale: 1.1 }}
+          transition={{ duration: 4, ease: "easeOut" }}
+          className="absolute -top-20 -right-32 h-[90vw] w-[90vw] rounded-full blur-[140px]"
+          style={{
+            background: "radial-gradient(circle, #FFD700 0%, rgba(255,215,0,0.2) 35%, rgba(10,14,39,0.1) 70%, transparent 100%)"
+          }}
+        />
+
+        {/* 2. SECONDARY LIGHT: Deep Tech Blue (Balance) */}
+        {/* Moves slightly to add depth */}
+        <motion.div
+          initial={{ x: "100%", opacity: 0 }}
+          animate={{ x: "-40%", opacity: 0.4 }}
+          transition={{ duration: 5, delay: 0.5, ease: "easeOut" }}
+          className="absolute top-0 left-0 h-[80vw] w-[80vw] rounded-full blur-[160px] bg-[#0A0E27]"
+        />
+
+        {/* 3. TYPOGRAPHY: Stencil Effect */}
+        {/* mix-blend-overlay makes the text interact with the light behind it */}
+        <div className="relative z-10 text-center mix-blend-overlay">
+          <h1 className="font-black text-[14vw] leading-[0.85] tracking-tight text-white/90 select-none">
+            SEVENTH<br />DAY
           </h1>
-          <p className="mt-6 font-sans text-xl text-white md:text-2xl">
-            We CREATE brands in seven days.
+          <p className="mt-8 text-[1.5vw] font-light tracking-[0.2em] text-white/80 uppercase">
+            We Create.
           </p>
+        </div>
 
-          <div className="mt-16 max-w-2xl space-y-8">
-            <p className="font-sans text-base leading-relaxed text-white md:text-lg">
-              In the beginning there was chaos.<br />
-              Day one. We began.<br />
-              Day seven. The brand is finished.
-            </p>
-
-            <p className="font-sans text-base leading-relaxed text-white md:text-lg">
-              Six days of work between them.<br />
-              No extra meetings. No extra words.
-            </p>
-
-            <p className="font-sans text-base leading-relaxed text-white md:text-lg">
-              Ready to start Monday?
-            </p>
-          </div>
-
-          <button className="mt-12 rounded-full border border-white bg-transparent px-8 py-3 font-sans text-sm uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-tech-blue">
-            Begin Day One
-          </button>
+        {/* 4. SCROLL HINT */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3, duration: 1.2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-center"
+        >
+          <p className="text-xs uppercase tracking-[0.3em] text-white/30">
+            Scroll ↓
+          </p>
         </motion.div>
 
-        {/* Bottom Gradient for Seamless Blend */}
-        <div className="absolute bottom-0 left-0 right-0 z-30 h-32 bg-gradient-to-t from-tech-blue to-transparent" />
-      </main>
+      </div>
 
       <div className="relative z-40 -mt-20">
         <Manifesto />
