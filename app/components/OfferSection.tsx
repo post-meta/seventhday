@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 export default function OfferSection() {
     const [activePkg, setActivePkg] = useState(0);
