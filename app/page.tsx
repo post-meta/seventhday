@@ -6,6 +6,7 @@ import Manifesto from "./components/Manifesto";
 import ProcessSection from "./components/ProcessSection";
 import OutputSection from "./components/OutputSection";
 import OfferSection from "./components/OfferSection";
+import Footer from "./components/Footer";
 
 export default function Home() {
   const [isMuted, setIsMuted] = useState(false);
@@ -62,6 +63,7 @@ export default function Home() {
         <ProcessSection />
         <OutputSection />
         <OfferSection />
+        <Footer />
       </div>
     </>
   );
