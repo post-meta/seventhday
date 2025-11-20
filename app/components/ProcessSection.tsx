@@ -70,7 +70,7 @@ export default function ProcessSection() {
                         }}
                         onViewportEnter={() => setActiveStep(index)}
                     >
-                        <p className="font-sans text-xl leading-relaxed text-white md:text-2xl lg:text-3xl">
+                        <p className="font-mono text-xl leading-relaxed text-white md:text-2xl lg:text-3xl">
                             {step.text}
                         </p>
                     </motion.div>

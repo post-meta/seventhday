@@ -46,14 +46,14 @@ export default function Manifesto() {
                     {/* Body Text */}
                     <motion.p
                         variants={itemVariants}
-                        className="mt-8 max-w-2xl mx-auto font-sans text-base leading-relaxed text-white md:text-lg"
+                        className="mt-8 max-w-2xl mx-auto font-mono text-base leading-relaxed text-white md:text-lg"
                     >
                         We simply removed what was not needed.
                     </motion.p>
 
                     <motion.p
                         variants={itemVariants}
-                        className="mt-6 max-w-2xl mx-auto font-sans text-base leading-relaxed text-white md:text-lg"
+                        className="mt-6 max-w-2xl mx-auto font-mono text-base leading-relaxed text-white md:text-lg"
                     >
                         The usual way: months of talks and revisions.<br />
                         Our way: seven days.
@@ -61,7 +61,7 @@ export default function Manifesto() {
 
                     <motion.p
                         variants={itemVariants}
-                        className="mt-6 max-w-2xl mx-auto font-sans text-base leading-relaxed text-white md:text-lg"
+                        className="mt-6 max-w-2xl mx-auto font-mono text-base leading-relaxed text-white md:text-lg"
                     >
                         Day one — audit.<br />
                         Day seven — launch.
@@ -69,7 +69,7 @@ export default function Manifesto() {
 
                     <motion.p
                         variants={itemVariants}
-                        className="mt-6 max-w-2xl mx-auto font-sans text-base leading-relaxed text-white md:text-lg"
+                        className="mt-6 max-w-2xl mx-auto font-mono text-base leading-relaxed text-white md:text-lg"
                     >
                         That is all.
                     </motion.p>

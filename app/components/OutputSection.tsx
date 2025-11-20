@@ -15,62 +15,13 @@ export default function OutputSection() {
             viewport={{ once: true }}
             className="font-display text-5xl font-bold leading-tight tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 md:text-7xl lg:text-8xl"
           >
-            Case Study
+            Output
           </motion.h2>
         </div>
 
-        {/* Case Study Data - Text Only */}
-        <div className="space-y-12 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <p className="font-sans text-lg text-white md:text-xl">Rebel Coffee</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <p className="font-sans text-base text-white md:text-lg">Monday — chaos in positioning.</p>
-            <p className="font-sans text-base text-white md:text-lg">Sunday — new brand.</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <p className="font-sans text-base text-white md:text-lg">Before: 12 logo options. None worked.</p>
-            <p className="font-sans text-base text-white md:text-lg">After: one. It works.</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <p className="font-sans text-base text-white md:text-lg">+187% site traffic in first 30 days.</p>
-            <p className="font-sans text-base text-white md:text-lg">Revisions: 1.</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <p className="font-sans text-base text-white md:text-lg">"And they saw that it was good."</p>
-            <p className="font-sans text-sm text-white/70 md:text-base">— Founder, Rebel Coffee</p>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+      </motion.div>
+    </div>
+      </div >
+    </section >
   );
 }
