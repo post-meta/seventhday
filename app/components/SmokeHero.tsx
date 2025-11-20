@@ -134,39 +134,6 @@ export default function SmokeHero() {
                 </motion.div>
             </div>
 
-            {/* 4. BOTTOM INTERACTION (Input Field) */}
-            <div className="absolute bottom-12 left-0 right-0 z-50 flex flex-col items-center px-4">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.2, duration: 0.8 }}
-                    className="relative w-full max-w-2xl"
-                >
-                    <input
-                        type="text"
-                        placeholder="What do you want to know?"
-                        className="w-full rounded-2xl border border-white/10 bg-black/50 px-6 py-5 text-lg text-white placeholder-white/30 backdrop-blur-md focus:border-white/30 focus:outline-none focus:ring-0 transition-all"
-                    />
-                    <button className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition-all">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M12 19V5M5 12l7-7 7 7" />
-                        </svg>
-                    </button>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5 }}
-                    className="mt-8 text-center text-xs text-gray-500"
-                >
-                    <p>Seventh Day goes Global: Announcing Our Landmark Partnership with Creative Minds and AI.</p>
-                    <button className="mt-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] uppercase tracking-wider hover:bg-white/10 transition-colors text-white">
-                        Read Announcement →
-                    </button>
-                </motion.div>
-            </div>
-
         </div>
     );
 }

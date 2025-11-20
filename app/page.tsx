@@ -32,7 +32,7 @@ export default function Home() {
     <>
       {/* Background Audio */}
       <audio ref={audioRef} loop>
-        <source src="/audio/background.m4a" type="audio/mp4" />
+        <source src="/audio/background.mp3" type="audio/mpeg" />
       </audio>
 
       {/* Mute Button - Top Right */}
