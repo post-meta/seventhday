@@ -115,19 +115,6 @@ export default function SmokeHero() {
                 className="absolute inset-0 z-0 blur-3xl opacity-80" // Дополнительный блюр CSS для мягкости
             />
 
-            {/* 2. UI: NAVBAR (Top) */}
-            <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6">
-                <div className="text-white font-bold text-xl tracking-tighter">X1</div>
-                <nav className="hidden md:flex space-x-8 text-xs font-medium text-gray-400 uppercase tracking-widest">
-                    <a href="#" className="hover:text-white transition-colors">Genesis</a>
-                    <a href="#" className="hover:text-white transition-colors">API</a>
-                    <a href="#" className="hover:text-white transition-colors">Company</a>
-                    <a href="#" className="hover:text-white transition-colors">Careers</a>
-                </nav>
-                <button className="rounded-full border border-white/20 px-6 py-2 text-xs font-medium text-white hover:bg-white hover:text-black transition-all">
-                    TRY SEVENTH DAY
-                </button>
-            </header>
 
             {/* 3. HERO CONTENT (Center) */}
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-center">
