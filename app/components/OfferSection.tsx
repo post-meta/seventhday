@@ -56,10 +56,17 @@ export default function OfferSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.2 }}
                             viewport={{ once: false, amount: 0.6 }}
-                            onViewportEnter={() => setActivePkg(index)}
-                            className={`group relative flex flex-col bg-black p-8 transition-all hover:border-white/30 ${activePkg === index
-                                ? "border border-white/30"
-                                : "border border-white/10"
+                            onViewportEnter={() => {
+                                // Only auto-activate on scroll for mobile devices
+                                if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                                    setActivePkg(index);
+                                }
+                            }}
+                            onClick={() => setActivePkg(index)}
+                            onMouseEnter={() => setActivePkg(index)}
+                            className={`group relative flex cursor-pointer flex-col bg-black p-8 transition-all hover:border-white/30 ${activePkg === index
+                                    ? "border border-white/30"
+                                    : "border border-white/10"
                                 }`}
                         >
                             {/* Package Name */}
