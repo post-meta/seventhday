@@ -12,34 +12,14 @@ const steps = [
     },
     {
         day: "Day 2",
-        title: "We separated signal",
-        description: "from noise.",
-    },
-    {
-        day: "Day 3",
-        title: "We built the foundation.",
-        description: "",
-    },
-    {
-        day: "Day 4",
-        title: "We gave it form.",
-        description: "",
-    },
-    {
-        day: "Day 5",
-        title: "We gave it voice.",
-        description: "",
-    },
-    {
-        day: "Day 6",
-        title: "We tuned it",
-        description: "to your audience.",
-    },
-    {
-        day: "Day 7",
-        title: "It is finished.",
-        description: "Rest.",
-    },
+    { id: 1, day: "Day 1", text: "We begin." },
+    { id: 2, day: "Day 2", text: "We listen." },
+    { id: 3, day: "Day 3", text: "We build the foundation." },
+    { id: 4, day: "Day 4", text: "We give it form." },
+    { id: 5, day: "Day 5", text: "We give it voice." },
+    { id: 6, day: "Day 6", text: "We tune it to your audience." },
+    { id: 7, day: "Day 7", text: "It is finished." },
+    { id: 8, day: "", text: "Rest." },
 ];
 
 function StepBlock({
@@ -116,15 +96,37 @@ export default function ProcessSection() {
                 </div>
             </div>
 
-            {/* Right Column: Scrollable Steps */}
-            <div className="w-full md:w-[60%]">
+            {/* Right Column: Step Descriptions */}
+            <div className="relative w-full md:w-[60%] md:pl-16">
                 {steps.map((step, index) => (
-                    <StepBlock
-                        key={index}
-                        step={step}
-                        index={index}
-                        setActiveStep={setActiveStep}
-                    />
+                    <motion.div
+                        key={step.id}
+                        id={`day-${index + 1}`}
+                        className="flex min-h-screen items-center justify-start"
+                        initial={{ opacity: 0 }}
+                        whileInView={{
+                            opacity: 1,
+                            filter: "blur(0px)"
+                        }}
+                        viewport={{
+                            once: false,
+                            amount: 0.5,
+                            margin: "-20% 0px -20% 0px"
+                        }}
+                        transition={{
+                            duration: 0.8,
+                            ease: "easeOut"
+                        }}
+                        style={{
+                            filter: "blur(8px)",
+                            opacity: 0
+                        }}
+                        onViewportEnter={() => setActiveStep(index)}
+                    >
+                        <p className="font-sans text-xl leading-relaxed text-white md:text-2xl lg:text-3xl">
+                            {step.text}
+                        </p>
+                    </motion.div>
                 ))}
             </div>
         </section>
