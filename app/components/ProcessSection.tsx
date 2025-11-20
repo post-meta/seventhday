@@ -21,7 +21,7 @@ export default function ProcessSection() {
     return (
         <section className="relative flex w-full bg-black px-4 py-16 md:flex-row md:px-8 lg:py-24">
             {/* Left Column: Day Numbers (Desktop Only) */}
-            <div className="sticky top-24 hidden h-screen w-[20%] md:block">
+            <div className="sticky top-24 hidden h-screen w-[20%] pl-12 md:block">
                 <div className="flex h-full flex-col justify-center space-y-8">
                     {steps.map((step, index) => (
                         <motion.div
@@ -46,23 +46,19 @@ export default function ProcessSection() {
                     <motion.div
                         key={step.id}
                         className="flex min-h-screen flex-col items-start justify-center"
-                        initial={{ opacity: 0 }}
+                        initial={{ opacity: 0, filter: "blur(10px)" }}
                         whileInView={{
                             opacity: 1,
                             filter: "blur(0px)"
                         }}
                         viewport={{
                             once: false,
-                            amount: 0.5,
-                            margin: "-20% 0px -20% 0px"
+                            amount: 0.4, // Trigger earlier
+                            margin: "-10% 0px -10% 0px" // Wider active area
                         }}
                         transition={{
                             duration: 0.8,
                             ease: "easeOut"
-                        }}
-                        style={{
-                            filter: "blur(8px)",
-                            opacity: 0
                         }}
                         onViewportEnter={() => setActiveStep(index)}
                     >

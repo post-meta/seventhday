@@ -78,8 +78,11 @@ export default function OfferSection() {
                                 ))}
                             </div>
 
-                            {/* CTA - appears on hover */}
-                            <button className="mt-8 w-full rounded-full border border-white/30 bg-transparent py-3 font-mono text-xs uppercase tracking-widest text-white opacity-0 transition-all group-hover:opacity-100 hover:border-white hover:bg-white/10">
+                            {/* CTA - appears on hover or if active */}
+                            <button
+                                className={`mt-8 w-full rounded-full border border-white/30 bg-transparent py-3 font-mono text-xs uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10 ${pkg.name === "Genesis" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                    }`}
+                            >
                                 Begin Day One
                             </button>
                         </motion.div>
