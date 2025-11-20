@@ -11,7 +11,6 @@ export default function OfferSection() {
             name: "Genesis",
             days: "7 days",
             price: "$8,000",
-            image: "/images/genesis.png",
             features: [
                 "Brand essence · Visual identity · Core messaging",
                 "Two rounds of revisions included.",
@@ -22,7 +21,6 @@ export default function OfferSection() {
             name: "Exodus",
             days: "21 days",
             price: "$22,000",
-            image: "/images/exodus.png",
             features: [
                 "Everything in Genesis",
                 "+ Full brand book · Content system · AI voice & tone guidelines",
@@ -35,7 +33,6 @@ export default function OfferSection() {
             name: "Revelation",
             days: "90 days",
             price: "$80,000",
-            image: "/images/revelation.png",
             features: [
                 "Everything in Exodus",
                 "+ Complete AI ecosystem",
@@ -90,15 +87,6 @@ export default function OfferSection() {
                                         {feature}
                                     </p>
                                 ))}
-                            </div>
-
-                            {/* Image */}
-                            <div className="mt-8 flex items-center justify-center overflow-hidden rounded-lg bg-white/5 p-4">
-                                <img
-                                    src={pkg.image}
-                                    alt={pkg.name}
-                                    className="h-32 w-32 object-contain opacity-80 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100"
-                                />
                             </div>
 
                             {/* CTA - appears on hover or if active */}
