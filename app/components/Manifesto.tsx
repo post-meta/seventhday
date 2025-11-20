@@ -77,7 +77,7 @@ export default function Manifesto() {
                     {/* Gold tagline at bottom */}
                     <motion.p
                         variants={itemVariants}
-                        className="mt-12 font-sans text-sm text-holy-gold md:text-base"
+                        className="mt-12 font-mono text-sm text-white/60 md:text-base"
                     >
                         We CREATE.
                     </motion.p>
