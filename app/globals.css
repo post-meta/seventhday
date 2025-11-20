@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-tech-blue text-white min-h-screen;
+    color: #E0E0E0;
+  }
+}
