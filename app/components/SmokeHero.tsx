@@ -25,8 +25,9 @@ export default function SmokeHero() {
         window.addEventListener("resize", resize);
         resize();
 
-        // Конфигурация частиц
-        const particleCount = 60; // Количество облаков
+        // Конфигурация частиц - адаптивная для мобильных
+        const isMobile = window.innerWidth < 768;
+        const particleCount = isMobile ? 25 : 60; // Меньше частиц на мобильных
 
         class Particle {
             x: number;
@@ -37,10 +38,14 @@ export default function SmokeHero() {
             opacity: number;
 
             constructor() {
+                const isMobile = window.innerWidth < 768;
                 this.x = Math.random() * canvas!.width + canvas!.width * 0.5; // Спавн справа
                 this.y = Math.random() * canvas!.height;
                 this.vx = -0.2 - Math.random() * 0.5; // Движение влево (медленно)
-                this.radius = 100 + Math.random() * 300; // Огромные радиусы для эффекта тумана
+                // Меньшие радиусы для мобильных устройств
+                this.radius = isMobile
+                    ? 80 + Math.random() * 150
+                    : 100 + Math.random() * 300;
 
                 // Цвета: Смесь золота, белого и синего (X.AI palette + Seventh Day Gold)
                 const colors = [
@@ -112,7 +117,7 @@ export default function SmokeHero() {
             {/* 1. CANVAS LAYER (The Mist) */}
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 z-0 blur-3xl opacity-80" // Дополнительный блюр CSS для мягкости
+                className="absolute inset-0 z-0 blur-2xl opacity-80 md:blur-3xl" // Меньше blur на мобильных
             />
 
 
