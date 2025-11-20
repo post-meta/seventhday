@@ -14,6 +14,7 @@ const garamond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://seventh.day"),
   title: "Seventh Day — We CREATE.",
   description: "We create brands in seven days. Brand essence, visual identity, and core messaging delivered with precision.",
   icons: {
