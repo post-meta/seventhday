@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function OutputSection() {
   return (
-    <section className="relative w-full bg-tech-blue px-4 py-24 md:px-8 lg:py-32">
+    <section className="relative w-full bg-black px-4 py-24 md:px-8 lg:py-32">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-16 text-center md:mb-24">
@@ -13,7 +13,7 @@ export default function OutputSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="font-sans text-3xl font-normal text-white md:text-5xl lg:text-6xl"
+            className="font-display text-5xl font-bold leading-tight tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 md:text-7xl lg:text-8xl"
           >
             Case Study
           </motion.h2>

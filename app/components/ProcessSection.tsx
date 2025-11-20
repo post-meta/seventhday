@@ -92,9 +92,9 @@ export default function ProcessSection() {
     const [activeStep, setActiveStep] = useState(0);
 
     return (
-        <section className="relative flex w-full flex-col bg-tech-blue md:flex-row">
+        <section className="relative flex w-full flex-col bg-black md:flex-row">
             {/* Left Column: Simple Day List */}
-            <div className="flex h-screen w-full flex-col justify-center bg-tech-blue px-8 md:sticky md:top-0 md:w-[40%] md:pl-16">
+            <div className="flex h-screen w-full flex-col justify-center bg-black px-8 md:sticky md:top-0 md:w-[40%] md:pl-16">
                 <div className="flex flex-col gap-6">
                     {steps.map((step, index) => (
                         <motion.div

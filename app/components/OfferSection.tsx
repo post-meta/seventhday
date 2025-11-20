@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function OfferSection() {
     return (
-        <section className="relative flex w-full flex-col items-center justify-center bg-tech-blue px-4 py-24 md:px-8 lg:py-32">
+        <section className="relative flex w-full flex-col items-center justify-center bg-black px-4 py-24 md:px-8 lg:py-32">
             <div className="container mx-auto max-w-2xl">
                 {/* Main Offer Card */}
                 <motion.div
@@ -12,11 +12,11 @@ export default function OfferSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="relative overflow-hidden bg-tech-blue p-8 md:p-16"
+                    className="relative overflow-hidden bg-black p-8 md:p-16"
                 >
                     <div className="flex flex-col items-center text-center space-y-8">
                         {/* Header */}
-                        <h2 className="font-sans text-3xl font-normal text-white md:text-5xl">
+                        <h2 className="font-display text-5xl font-bold leading-tight tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 md:text-7xl">
                             Genesis
                         </h2>
 
