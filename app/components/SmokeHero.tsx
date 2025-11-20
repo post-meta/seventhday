@@ -122,7 +122,7 @@ export default function SmokeHero() {
 
 
             {/* 3. HERO CONTENT (Center) */}
-            <div className="relative z-10 flex h-full w-full flex-col items-center justify-center">
+            <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4">
                 {/* Typography */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -136,6 +136,37 @@ export default function SmokeHero() {
                     <h1 className="text-center font-display text-[15vw] font-bold leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/80 to-white/10 select-none">
                         Day
                     </h1>
+                </motion.div>
+
+                {/* Typewriter Text */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.2 }}
+                    className="mt-12 flex flex-col items-center space-y-6 text-center"
+                >
+                    <p className="font-mono text-sm tracking-wide text-white/80 md:text-base">
+                        We CREATE.
+                    </p>
+
+                    <div className="space-y-2">
+                        <p className="font-mono text-sm tracking-wide text-white/60 md:text-base">
+                            Day one. We begin.
+                        </p>
+                        <p className="font-mono text-sm tracking-wide text-white/60 md:text-base">
+                            Day seven. It is finished.
+                        </p>
+                    </div>
+
+                    {/* CTA Button */}
+                    <motion.button
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.8 }}
+                        className="mt-8 rounded-full border border-white/30 bg-transparent px-8 py-3 font-mono text-xs uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10"
+                    >
+                        [ Begin Day One ]
+                    </motion.button>
                 </motion.div>
             </div>
 
