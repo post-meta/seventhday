@@ -53,7 +53,10 @@ export default function OfferSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: index * 0.2 }}
                             viewport={{ once: true }}
-                            className="relative flex flex-col border border-white/10 bg-black p-8"
+                            className={`group relative flex flex-col bg-black p-8 transition-all hover:border-white/30 ${pkg.name === "Genesis"
+                                    ? "border border-white/30"
+                                    : "border border-white/10"
+                                }`}
                         >
                             {/* Package Name */}
                             <h3 className="font-display text-3xl font-bold leading-tight tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 md:text-4xl">
@@ -75,8 +78,8 @@ export default function OfferSection() {
                                 ))}
                             </div>
 
-                            {/* CTA */}
-                            <button className="mt-8 w-full rounded-full border border-white/30 bg-transparent py-3 font-mono text-xs uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10">
+                            {/* CTA - appears on hover */}
+                            <button className="mt-8 w-full rounded-full border border-white/30 bg-transparent py-3 font-mono text-xs uppercase tracking-widest text-white opacity-0 transition-all group-hover:opacity-100 hover:border-white hover:bg-white/10">
                                 Begin Day One
                             </button>
                         </motion.div>
