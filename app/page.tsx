@@ -9,13 +9,13 @@ import OfferSection from "./components/OfferSection";
 import Footer from "./components/Footer";
 
 import AudioPlayer from "./components/AudioPlayer";
-import CosmicFluidEngine from "./components/CosmicFluidEngine";
+import LightningCanvas from "./components/LightningCanvas";
 
 export default function Home() {
   return (
     <>
-      {/* GENESIS FLUID ENGINE (Background) */}
-      <CosmicFluidEngine />
+      {/* LIGHTNING CANVAS (Background) */}
+      <LightningCanvas />
 
       {/* Audio Player */}
       <AudioPlayer />
