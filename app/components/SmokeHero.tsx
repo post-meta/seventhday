@@ -6,12 +6,12 @@ import { HeroTitle } from "./HeroTitle";
 
 export default function SmokeHero() {
     return (
-        <div className="relative h-screen w-full overflow-visible bg-transparent font-sans selection:bg-white/20">
+        <div className="relative h-screen w-full overflow-visible bg-transparent font-sans selection:bg-white/20 pointer-events-none">
             {/* Hero Content is now overlaid on the global CosmicFluidEngine */}
 
 
             {/* 3. HERO CONTENT (Center) */}
-            <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4">
+            <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4 pointer-events-auto">
                 {/* Blueprint Reveal Title */}
                 <HeroTitle />
 

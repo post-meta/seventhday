@@ -29,13 +29,15 @@ export default function FluidBackground() {
                     splatRadius: 0.005,
                     bloom: true,
                     bloomIntensity: 0.5,
-                    bloomThreshold: 0.2,
+                    bloomThreshold: 0.5, // Higher threshold to avoid background glow/spots
                     colorPalette: ['#ffffff', '#e0e0e0', '#c0c0c0'], // Monochrome
                     backColor: '#000000',
                     transparent: false,
                     brightness: 1.0,
                 });
 
+                // Attempt to clear any initial splats by not calling any splat function
+                // fluid.splats(); // Do not call this
                 fluid.start();
             });
         }
