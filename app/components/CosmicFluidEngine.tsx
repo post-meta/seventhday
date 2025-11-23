@@ -3,10 +3,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * PROJECT: GENESIS FLUID ENGINE
+ * PROJECT: GENESIS FLUID ENGINE (REFINED: ELECTRIC STORM)
  * A WebGL2 Real-time Electromagnetic Plasma Simulation for SEVENTH DAY Brand
  * 
- * "In the beginning was the Void, and the Void was with Code, and the Code was Divine..."
+ * REFINEMENT: "Electric Storm" Physics
+ * - High Curl (65.0) for lightning twists
+ * - Fast Decay (0.96) for flash effect
+ * - Sharp Input (0.1) for plasma injection
+ * - Star/Grain Noise for texture
  */
 
 // --- SHADERS ---
@@ -30,14 +34,20 @@ uniform float u_aspectRatio;
 uniform vec3 u_color;
 uniform vec2 u_point;
 uniform float u_radius;
-uniform float u_strength; // Charge strength / Thermal energy
+uniform float u_strength;
 
 out vec4 outColor;
 
 void main() {
     vec2 p = v_uv - u_point.xy;
     p.x *= u_aspectRatio;
-    vec3 splat = exp(-dot(p, p) / u_radius) * u_color * u_strength;
+    // Sharper falloff for "Electric" feel (power 3.0 instead of exp)
+    // float falloff = exp(-dot(p, p) / u_radius); 
+    float dist = length(p);
+    float falloff = 1.0 / (1.0 + pow(dist / u_radius, 4.0)); // Sharper edge
+    falloff = smoothstep(1.0, 0.0, dist / u_radius); // Hard cut
+
+    vec3 splat = falloff * u_color * u_strength;
     vec3 base = texture(u_target, v_uv).xyz;
     outColor = vec4(base + splat, 1.0);
 }
@@ -60,7 +70,7 @@ void main() {
     vec2 coord = v_uv - u_dt * texture(u_velocity, v_uv).xy * u_texelSize;
     vec4 result = texture(u_source, coord);
     float decay = 1.0 + u_dissipation * u_dt;
-    outColor = result / decay;
+    outColor = result * u_dissipation; // Multiplicative decay for faster fade
 }
 `;
 
@@ -146,7 +156,6 @@ void main() {
     float T = texture(u_velocity, v_uv + vec2(0.0, u_texelSize.y)).x;
     float B = texture(u_velocity, v_uv - vec2(0.0, u_texelSize.y)).x;
     
-    // Vorticity magnitude: ω = ∇ × v
     outCurl = R - L - T + B;
 }
 `;
@@ -158,7 +167,7 @@ precision highp sampler2D;
 in vec2 v_uv;
 uniform sampler2D u_velocity;
 uniform sampler2D u_curl;
-uniform float u_curlStrength; // 50.0 (extreme swirls)
+uniform float u_curlStrength;
 uniform float u_dt;
 uniform vec2 u_texelSize;
 
@@ -186,11 +195,16 @@ precision highp float;
 precision highp sampler2D;
 
 in vec2 v_uv;
-uniform sampler2D u_texture; // Density/Color
-uniform sampler2D u_velocity; // For warping/chromatic aberration
+uniform sampler2D u_texture;
+uniform sampler2D u_velocity;
 uniform float u_time;
 
 out vec4 outColor;
+
+// Noise for "Stars" and "Grain"
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
 
 // ACES Filmic Tonemapping
 vec3 aces_tonemap(vec3 color) {
@@ -210,68 +224,67 @@ vec3 aces_tonemap(vec3 color) {
     return clamp(m2 * (a / b), 0.0, 1.0);
 }
 
-// Noise for "Film Grain"
-float random(vec2 st) {
-    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-}
-
 void main() {
-    // Chromatic Aberration based on velocity (Relativistic Shift)
-    vec2 vel = texture(u_velocity, v_uv).xy * 0.005;
-    float r = texture(u_texture, v_uv - vel).r;
-    float g = texture(u_texture, v_uv).g;
-    float b = texture(u_texture, v_uv + vel).b;
+    vec3 color = texture(u_texture, v_uv).rgb;
     
-    vec3 color = vec3(r, g, b);
+    // 1. High-Frequency Noise (Stars)
+    // If density is low but non-zero, multiply by noise to create "twinkling"
+    float noise = random(v_uv * 100.0 + u_time * 0.5); // High freq
     
-    // "Genesis Moment" flash logic could be passed as uniform, but we keep it simple here
-    // Apply ACES Tonemapping
-    color = aces_tonemap(color);
-    
-    // Film Grain (Blue noise approximation)
-    float noise = random(v_uv + u_time);
-    color += (noise - 0.5) * 0.05; // 5% grain
-    
-    // Bloom/Glow (Simplified inline)
-    // In a full pipeline, this would be a separate pass. 
-    // Here we boost high values slightly.
-    color += max(color - 0.6, 0.0) * 0.5;
+    if (color.r < 0.3 && color.r > 0.01) {
+        // Create sparkles in the tails
+        float sparkle = step(0.98, noise); // Only top 2% are stars
+        color += vec3(sparkle * color.r * 2.0); 
+    }
 
-    // Strict Monochrome Palette Enforcement with subtle shift
-    // void: [0,0,0], plasma: [0.2], energy: [0.7], creation: [1.0]
-    // We desaturate slightly to ensure "Quiet Luxury"
+    // 2. Film Grain (Heavy)
+    float grain = (random(v_uv + u_time) - 0.5) * 0.15; // Increased grain
+    color += grain;
+
+    // 3. Tonemap
+    color = aces_tonemap(color);
+
+    // 4. Bloom (Simple threshold)
+    vec3 bloom = max(color - 0.6, 0.0) * 2.0;
+    color += bloom;
+
+    // 5. Monochrome / Electric Shift
     float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
-    vec3 mono = vec3(luminance);
+    vec3 finalColor = vec3(luminance);
     
-    // Mix back a tiny bit of blue for "Relativistic Shift" at high energy
-    vec3 finalColor = mix(mono, vec3(0.9, 0.95, 1.0) * luminance, luminance * luminance * 0.2);
+    // Subtle blue shift for high energy (Electric)
+    finalColor = mix(finalColor, vec3(0.9, 0.95, 1.0), luminance * 0.5);
 
     outColor = vec4(finalColor, 1.0);
 }
 `;
 
-// --- TYPES & UTILS ---
+// --- CONFIG ---
 
 interface CosmicFluidConfig {
-    viscosity: number;
-    diffusion: number;
-    vorticity: number;
-    permittivity: number;
-    permeability: number;
+    curlStrength: number;
+    splatForce: number;
+    splatRadius: number;
+    dyeIntensity: number;
+    bloomThreshold: number;
     bloomIntensity: number;
-    grainAmount: number;
-    contrastRatio: number;
+    pressureIterations: number;
+    dissipation: number;
+    velocityDissipation: number;
+    simResolution: number;
 }
 
-const DEFAULT_CONFIG: CosmicFluidConfig = {
-    viscosity: 0.0001, // nearly inviscid
-    diffusion: 0.98,   // slow dissipation
-    vorticity: 50.0,   // extreme swirls
-    permittivity: 8.854e-12,
-    permeability: 1.257e-6,
-    bloomIntensity: 0.8,
-    grainAmount: 0.02,
-    contrastRatio: 100,
+const CONFIG: CosmicFluidConfig = {
+    curlStrength: 65.0,      // Extremely high for lightning swirls
+    splatForce: 6000.0,      // High energy injection
+    splatRadius: 0.1,        // Very thin, sharp injection point
+    dyeIntensity: 20.0,      // Blindingly bright
+    bloomThreshold: 0.6,     // Only brightest parts glow
+    bloomIntensity: 2.0,     // Strong bloom
+    pressureIterations: 30,  // Better physics accuracy
+    dissipation: 0.96,       // Fades faster (electric flash)
+    velocityDissipation: 0.99, // Momentum keeps going
+    simResolution: 0.5,
 };
 
 // --- COMPONENT ---
@@ -289,7 +302,8 @@ export default function CosmicFluidEngine() {
             depth: false,
             stencil: false,
             antialias: false,
-            preserveDrawingBuffer: false
+            preserveDrawingBuffer: false,
+            powerPreference: "high-performance"
         });
 
         if (!gl) {
@@ -343,11 +357,10 @@ export default function CosmicFluidEngine() {
         let dyeHeight: number = 0;
 
         function initResolution() {
-            let aspect = canvas!.clientWidth / canvas!.clientHeight;
             dyeWidth = canvas!.clientWidth;
             dyeHeight = canvas!.clientHeight;
-            simWidth = dyeWidth >> 1; // 0.5x resolution for physics
-            simHeight = dyeHeight >> 1;
+            simWidth = Math.floor(dyeWidth * CONFIG.simResolution);
+            simHeight = Math.floor(dyeHeight * CONFIG.simResolution);
 
             canvas!.width = dyeWidth;
             canvas!.height = dyeHeight;
@@ -356,6 +369,10 @@ export default function CosmicFluidEngine() {
 
         const ext = gl.getExtension("EXT_color_buffer_float");
         const linearFiltering = gl.getExtension("OES_texture_float_linear");
+
+        // Use HALF_FLOAT for better performance on mobile, FLOAT for desktop if needed
+        const texType = ext ? gl.HALF_FLOAT : gl.FLOAT;
+        const texInternalFormat = ext ? gl.RGBA16F : gl.RGBA32F;
 
         function createDoubleFBO(w: number, h: number, internalFormat: number, format: number, type: number, param: number) {
             let fbo1 = createFBO(w, h, internalFormat, format, type, param);
@@ -432,10 +449,6 @@ export default function CosmicFluidEngine() {
 
         // --- BUFFERS ---
 
-        // Use half-float textures for HDR
-        const texType = ext ? gl.HALF_FLOAT : gl.FLOAT; // Fallback if needed, but WebGL2 usually supports HALF_FLOAT
-        const texInternalFormat = ext ? gl.RGBA16F : gl.RGBA32F; // Or RGBA16F
-
         let density = createDoubleFBO(dyeWidth, dyeHeight, texInternalFormat, gl.RGBA, texType, linearFiltering ? gl.LINEAR : gl.NEAREST);
         let velocity = createDoubleFBO(simWidth, simHeight, texInternalFormat, gl.RGBA, texType, linearFiltering ? gl.LINEAR : gl.NEAREST);
         let divergence = createFBO(simWidth, simHeight, texInternalFormat, gl.RGBA, texType, gl.NEAREST);
@@ -459,8 +472,7 @@ export default function CosmicFluidEngine() {
             splats.push({ x, y, dx, dy, color });
         }
 
-        // "Genesis Moment" - Initial Flash
-        splat(0.5, 0.5, 0, 0, [10.0, 10.0, 10.0]); // Big white flash
+        // NO INITIAL SPLAT - Start in Void
 
         function update() {
             const dt = Math.min((Date.now() - lastTime) / 1000, 0.016);
@@ -474,7 +486,7 @@ export default function CosmicFluidEngine() {
             gl!.uniform1i(advectionUniforms.u_velocity, velocity.read.attach(0));
             gl!.uniform1i(advectionUniforms.u_source, velocity.read.attach(0));
             gl!.uniform1f(advectionUniforms.u_dt, dt);
-            gl!.uniform1f(advectionUniforms.u_dissipation, DEFAULT_CONFIG.viscosity);
+            gl!.uniform1f(advectionUniforms.u_dissipation, CONFIG.velocityDissipation);
             blit(velocity.write.fbo);
             velocity.swap();
 
@@ -484,7 +496,7 @@ export default function CosmicFluidEngine() {
             gl!.uniform2f(advectionUniforms.u_texelSize, 1.0 / dyeWidth, 1.0 / dyeHeight);
             gl!.uniform1i(advectionUniforms.u_velocity, velocity.read.attach(0));
             gl!.uniform1i(advectionUniforms.u_source, density.read.attach(1));
-            gl!.uniform1f(advectionUniforms.u_dissipation, DEFAULT_CONFIG.diffusion);
+            gl!.uniform1f(advectionUniforms.u_dissipation, CONFIG.dissipation);
             blit(density.write.fbo);
             density.swap();
 
@@ -499,8 +511,8 @@ export default function CosmicFluidEngine() {
                     const s = splats[i];
                     gl!.uniform2f(splatUniforms.u_point, s.x, s.y);
                     gl!.uniform3f(splatUniforms.u_color, s.dx, s.dy, 0.0);
-                    gl!.uniform1f(splatUniforms.u_radius, 0.002); // Small radius for velocity
-                    gl!.uniform1f(splatUniforms.u_strength, 5.0); // Force multiplier
+                    gl!.uniform1f(splatUniforms.u_radius, CONFIG.splatRadius);
+                    gl!.uniform1f(splatUniforms.u_strength, CONFIG.splatForce);
                     blit(velocity.write.fbo);
                     velocity.swap();
                 }
@@ -511,8 +523,8 @@ export default function CosmicFluidEngine() {
                     const s = splats[i];
                     gl!.uniform2f(splatUniforms.u_point, s.x, s.y);
                     gl!.uniform3f(splatUniforms.u_color, s.color[0], s.color[1], s.color[2]);
-                    gl!.uniform1f(splatUniforms.u_radius, 0.005); // Larger radius for dye
-                    gl!.uniform1f(splatUniforms.u_strength, 1.0);
+                    gl!.uniform1f(splatUniforms.u_radius, CONFIG.splatRadius);
+                    gl!.uniform1f(splatUniforms.u_strength, CONFIG.dyeIntensity);
                     blit(density.write.fbo);
                     density.swap();
                 }
@@ -530,7 +542,7 @@ export default function CosmicFluidEngine() {
             gl!.uniform2f(vorticityUniforms.u_texelSize, 1.0 / simWidth, 1.0 / simHeight);
             gl!.uniform1i(vorticityUniforms.u_velocity, velocity.read.attach(0));
             gl!.uniform1i(vorticityUniforms.u_curl, curl.attach(1));
-            gl!.uniform1f(vorticityUniforms.u_curlStrength, DEFAULT_CONFIG.vorticity);
+            gl!.uniform1f(vorticityUniforms.u_curlStrength, CONFIG.curlStrength);
             gl!.uniform1f(vorticityUniforms.u_dt, dt);
             blit(velocity.write.fbo);
             velocity.swap();
@@ -546,11 +558,7 @@ export default function CosmicFluidEngine() {
             gl!.uniform2f(pressureUniforms.u_texelSize, 1.0 / simWidth, 1.0 / simHeight);
             gl!.uniform1i(pressureUniforms.u_divergence, divergence.attach(0));
 
-            // Clear pressure first? Usually 0 is fine start
-            // gl.bindFramebuffer(gl.FRAMEBUFFER, pressure.read.fbo);
-            // gl.clear(gl.COLOR_BUFFER_BIT);
-
-            for (let i = 0; i < 20; i++) { // 20 iterations for stability
+            for (let i = 0; i < CONFIG.pressureIterations; i++) {
                 gl!.uniform1i(pressureUniforms.u_pressure, pressure.read.attach(1));
                 blit(pressure.write.fbo);
                 pressure.swap();
@@ -569,7 +577,7 @@ export default function CosmicFluidEngine() {
             gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
             gl!.useProgram(displayProgram);
             gl!.uniform1i(displayUniforms.u_texture, density.read.attach(0));
-            gl!.uniform1i(displayUniforms.u_velocity, velocity.read.attach(1)); // For chromatic aberration
+            gl!.uniform1i(displayUniforms.u_velocity, velocity.read.attach(1));
             gl!.uniform1f(displayUniforms.u_time, performance.now() / 1000);
             gl!.drawElements(gl!.TRIANGLES, 6, gl!.UNSIGNED_SHORT, 0);
 
@@ -583,44 +591,22 @@ export default function CosmicFluidEngine() {
 
         // --- INTERACTION ---
 
-        let isMouseDown = false;
         let lastMouse = { x: 0, y: 0 };
 
-        const handleMouseDown = (e: MouseEvent) => {
-            isMouseDown = true;
-            lastMouse.x = e.clientX;
-            lastMouse.y = e.clientY;
-        };
-
-        const handleMouseUp = () => {
-            isMouseDown = false;
-        };
-
         const handleMouseMove = (e: MouseEvent) => {
-            // Always interact on move, not just drag
             const x = e.clientX;
             const y = e.clientY;
             const dx = x - lastMouse.x;
             const dy = y - lastMouse.y;
 
-            // Normalize coordinates
             const nx = x / window.innerWidth;
             const ny = 1.0 - y / window.innerHeight; // Flip Y for WebGL
 
             // Velocity scaling
             const velocityScale = 10.0;
 
-            // Add splat
-            // Color based on velocity? Or just white/silver
-            // "Gentle Touch" vs "Cosmic Impact" logic
-            const speed = Math.sqrt(dx * dx + dy * dy);
-            let color = [0.7, 0.7, 0.7]; // Silver
-
-            if (speed > 50) { // Cosmic Impact
-                color = [1.0, 1.0, 1.0]; // Pure White
-            } else if (speed < 5) { // Gentle
-                color = [0.2, 0.2, 0.2]; // Dark Plasma
-            }
+            // Electric Blue/White color
+            const color = [0.8, 0.9, 1.0];
 
             splat(nx, ny, dx * velocityScale, -dy * velocityScale, color);
 
@@ -628,24 +614,20 @@ export default function CosmicFluidEngine() {
             lastMouse.y = y;
         };
 
-        // Touch support
         const handleTouchMove = (e: TouchEvent) => {
             e.preventDefault();
             const touch = e.touches[0];
             const x = touch.clientX;
             const y = touch.clientY;
-            // Similar logic...
             const dx = x - lastMouse.x;
             const dy = y - lastMouse.y;
             const nx = x / window.innerWidth;
             const ny = 1.0 - y / window.innerHeight;
-            splat(nx, ny, dx * 10.0, -dy * 10.0, [0.8, 0.8, 0.8]);
+            splat(nx, ny, dx * 10.0, -dy * 10.0, [0.8, 0.9, 1.0]);
             lastMouse.x = x;
             lastMouse.y = y;
         };
 
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('touchstart', (e) => {
             lastMouse.x = e.touches[0].clientX;
@@ -657,8 +639,6 @@ export default function CosmicFluidEngine() {
         update();
 
         return () => {
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('touchmove', handleTouchMove);
         };
@@ -672,7 +652,10 @@ export default function CosmicFluidEngine() {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 w-full h-full z-0 pointer-events-auto"
-            style={{ touchAction: 'none' }}
+            style={{
+                touchAction: 'none',
+                mixBlendMode: 'screen' // Ensure light adds to background
+            }}
         />
     );
 }
