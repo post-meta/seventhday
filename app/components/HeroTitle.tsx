@@ -7,7 +7,7 @@ export const HeroTitle = () => {
 
             {/* SEVENTH - Blueprint Reveal Animation */}
             <motion.h1
-                className="text-[12vw] leading-[0.8] font-bold tracking-tighter text-center uppercase font-sans select-none"
+                className="text-[15vw] leading-[0.8] font-bold tracking-tighter text-center uppercase font-display select-none"
                 initial={{
                     // Initial state: Transparent text, Thin outline, Blurred (Grok style)
                     color: "rgba(255, 255, 255, 0)",
@@ -35,7 +35,7 @@ export const HeroTitle = () => {
 
             {/* DAY - Blueprint Reveal Animation (Delayed) */}
             <motion.h1
-                className="text-[12vw] leading-[0.8] font-bold tracking-tighter text-center uppercase font-sans select-none"
+                className="text-[15vw] leading-[0.8] font-bold tracking-tighter text-center uppercase font-display select-none"
                 initial={{
                     color: "rgba(255, 255, 255, 0)",
                     // @ts-ignore
