@@ -306,7 +306,8 @@ export default function CosmicFluidEngine() {
             if (!shader) throw new Error("Could not create shader");
             gl.shaderSource(shader, source);
             gl.compileShader(shader);
-            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
+            if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
+
             console.error(gl.getShaderInfoLog(shader));
             gl.deleteShader(shader);
             throw new Error("Shader compile error");
@@ -318,7 +319,8 @@ export default function CosmicFluidEngine() {
             gl.attachShader(program, vertexShader);
             gl.attachShader(program, fragmentShader);
             gl.linkProgram(program);
-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return program;
+            if (gl.getProgramParameter(program, gl.LINK_STATUS)) return program;
+
             console.error(gl.getProgramInfoLog(program));
             gl.deleteProgram(program);
             throw new Error("Program link error");
