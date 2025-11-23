@@ -9,13 +9,13 @@ import OfferSection from "./components/OfferSection";
 import Footer from "./components/Footer";
 
 import AudioPlayer from "./components/AudioPlayer";
-import LightningCanvas from "./components/LightningCanvas";
+import FluidBackground from "./components/FluidBackground";
 
 export default function Home() {
   return (
     <>
-      {/* LIGHTNING CANVAS (Background) */}
-      <LightningCanvas />
+      {/* FLUID BACKGROUND (WebGL) */}
+      <FluidBackground />
 
       {/* Audio Player */}
       <AudioPlayer />
