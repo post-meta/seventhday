@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { HeroTitle } from "./HeroTitle";
 
 export default function SmokeHero() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -123,51 +124,18 @@ export default function SmokeHero() {
 
             {/* 3. HERO CONTENT (Center) */}
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4">
-                {/* Typography */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                    className="flex flex-col items-center"
+                {/* Blueprint Reveal Title */}
+                <HeroTitle />
+
+                {/* CTA Button - Appears after title animation */}
+                <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 3.5, duration: 1 }} // Delayed to appear after "We CREATE"
+                    className="mt-12 rounded-full border border-white/30 bg-transparent px-10 py-4 font-mono text-sm uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10 md:px-8 md:py-3 md:text-xs"
                 >
-                    <h1 className="text-center font-display text-[15vw] font-bold leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 select-none">
-                        Seventh
-                    </h1>
-                    <h1 className="text-center font-display text-[15vw] font-bold leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/80 to-white/10 select-none">
-                        Day
-                    </h1>
-                </motion.div>
-
-                {/* Typewriter Text */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 1.2 }}
-                    className="mt-12 flex flex-col items-center space-y-6 text-center"
-                >
-                    <p className="font-mono text-base tracking-wide text-white/80 md:text-lg">
-                        We CREATE.
-                    </p>
-
-                    <div className="space-y-2">
-                        <p className="font-mono text-base tracking-wide text-white/60 md:text-lg">
-                            Day one. We begin.
-                        </p>
-                        <p className="font-mono text-base tracking-wide text-white/60 md:text-lg">
-                            Day seven. It is finished.
-                        </p>
-                    </div>
-
-                    {/* CTA Button */}
-                    <motion.button
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.8 }}
-                        className="mt-8 rounded-full border border-white/30 bg-transparent px-10 py-4 font-mono text-sm uppercase tracking-widest text-white transition-all hover:border-white hover:bg-white/10 md:px-8 md:py-3 md:text-xs"
-                    >
-                        [ Begin Day One ]
-                    </motion.button>
-                </motion.div>
+                    [ Begin Day One ]
+                </motion.button>
             </div>
 
             {/* Bottom Gradient for Smooth Transition */}
