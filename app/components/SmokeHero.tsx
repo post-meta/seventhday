@@ -47,14 +47,14 @@ export default function SmokeHero() {
                     ? 80 + Math.random() * 150
                     : 100 + Math.random() * 300;
 
-                // Цвета: Смесь золота, белого и синего (X.AI palette + Seventh Day Gold)
+                // Pure monochrome: White and light gray only (Quiet Luxury)
                 const colors = [
-                    "255, 215, 0",  // Holy Gold
-                    "255, 255, 255", // White
-                    "100, 149, 237", // Cornflower Blue (Grok vibe)
+                    "255, 255, 255", // Pure White
+                    "240, 240, 240", // Light Gray
+                    "220, 220, 220", // Soft Gray
                 ];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random() * 0.15; // Очень прозрачные
+                this.opacity = Math.random() * 0.08; // Very subtle (5-8%)
             }
 
             update() {
@@ -117,7 +117,7 @@ export default function SmokeHero() {
             {/* 1. CANVAS LAYER (The Mist) */}
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 z-0 blur-2xl opacity-80 md:blur-3xl" // Меньше blur на мобильных
+                className="absolute inset-0 z-0 blur-[100px] opacity-60 md:blur-[120px]" // Extreme blur for Silver Mist
             />
 
 
